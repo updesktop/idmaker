@@ -245,17 +245,17 @@ function disp_dtl_rec(num){
     var tag=document.getElementById('vFLD'+i).getAttribute('data-tag');
 
     if(tag=='img'){              
-      document.getElementById('vFLD'+i).style.backgroundImage='url('+JBE_API+'upload/layout/'+clientname+'/img/'+v_unod+'?'+n+')';
-      document.getElementById('vFLD'+i).style.backgroundRepeat='no-repeat'; 
-      document.getElementById('vFLD'+i).style.backgroundSize='auto 100%';
+      div.style.backgroundImage='url('+JBE_API+'upload/layout/'+clientname+'/img/'+v_unod+'?'+n+')';
+      div.style.backgroundRepeat='no-repeat'; 
+      div.style.backgroundSize='auto 100%';
     }else{
-      document.getElementById('vFLD'+i).innerHTML=v_unod;
+      div.innerHTML=v_unod;
     }
   }
 
   document.querySelectorAll('.cl_ngalan').forEach(function(el) {
     el.style.color='black';
-    el.style.border='0px solid red';
+    el.style.border='1px solid gray';
   });
   document.getElementById('divdtl'+num).style.color='red';
   document.getElementById('divdtl'+num).style.border='1px solid red';

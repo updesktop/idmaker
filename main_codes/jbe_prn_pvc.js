@@ -40,14 +40,13 @@ function mnu_prn_pvc(){
 }
 
 //------------------------------------------------------------------------------------------------------------------
-function disp_layout_prn(f_pvc,sugod,hunong,arySELECTED){
-  //alert('f_pvc='+f_pvc+' sugod:'+sugod+'  hunong:'+hunong);
+function disp_layout_prn(f_pvc,sugod,hunong,arySELECTED){  
+  var o_sugod=sugod;
+  var o_hunong=hunong;
+  //alert('f_pvc='+f_pvc+' sugod:'+sugod+'  hunong:'+hunong);  
   var clientcode=document.getElementById('div_main_view_pvc').getAttribute('data-clientcode');
   var clientname=document.getElementById('div_main_view_pvc').getAttribute('data-clientname');
   var n = new Date().toLocaleTimeString('it-IT');
-  var cur_page=parseInt(document.getElementById('div_main_view_pvc').getAttribute('data-pg'));
-
-  //alert('hunong '+hunong);
   
   var aryDB=JBE_GETARRY(DB_PVC1,'clientcode',clientcode);
   var frontImg=aryDB['IMGFRONT'];
@@ -86,7 +85,7 @@ function disp_layout_prn(f_pvc,sugod,hunong,arySELECTED){
   var dtl_gfx='';
 
   var aryPVC2=DB_PVC2;
-  aryPVC2.sort(sortByMultipleKey(['clientcode','ndx']));  
+  aryPVC2.sort(sortByMultipleKey(['clientcode','FLDNAME']));  
 
   var ctrPvc=5;
   if(aryPRN.length  < ctrPvc){ ctrPvc=aryPRN.length; }
@@ -109,31 +108,22 @@ function disp_layout_prn(f_pvc,sugod,hunong,arySELECTED){
   }
    
   var aryPVC2=DB_PVC2;
-  aryPVC2.sort(sortByMultipleKey(['clientcode','ndx']));  
+  aryPVC2.sort(sortByMultipleKey(['clientcode','FLDNAME']));  
 
   var dtl='<div id="'+div_boxname+'" style="display:block;position:relative;margin-top:10px;margin-left:5px;width:'+tot_width+'px;height:'+tot_height+'px;padding:5px;background:none;">';
   
   for(var i=1;i<=ctrPvc;i++){       
     dtl2=''; 
     dtl+=
-      '<div id="div_view_prn'+i+'" style="'+v_css+'float:left;border:1px solid lightgray;padding:'+v_padding+';-webkit-print-color-adjust:exact;position:relative;width:auto;height:auto;margin-left:0px;background:none;">';
-        if(idType == 2){
-          //dtl+='<div style="width:100%;height:5px;border:1px solid red;background:none;"></div>';
-        }
+      '<div id="div_view_prn'+i+'" style="'+v_css+'float:left;border:1px solid gray;padding:'+v_padding+';-webkit-print-color-adjust:exact;position:relative;width:auto;height:auto;margin-left:0px;background:none;">';
+        
         dtl+=
         '<div style="width:'+idWidth+'px;height:'+idHeight+'px;'+v_idtype_css+'border:1px solid black;background:none;">'+
           '<div id="front_prn_img" style="width:100%;height:100%;background:url('+JBE_API+'upload/layout/'+clientname+'/'+frontImg+'?'+n+') no-repeat;background-size: 100% 100%;"></div>'+
         '</div>';
 
-        //if(idType == 1){
-        //  dtl+='<div style="'+v_css+'width:5px;height:5px;border:1px solid red;background:black;"></div>';
-        //}
-
-        var xborder1=0;
-        //if(idType == 2){ xborder1=1; }
-          
         dtl+=
-        '<div style="width:'+idWidth+'px;height:'+idHeight+'px;'+v_idtype_css+'border:'+xborder1+'px solid lightgray;background:none;">'+
+        '<div style="width:'+idWidth+'px;height:'+idHeight+'px;'+v_idtype_css+'border:0px solid green;background:none;">'+
           '<div id="back_prn_img" style="width:100%;height:100%;background:url('+JBE_API+'upload/layout/'+clientname+'/'+backImg+'?'+n+') no-repeat;background-size: 100% 100%;"></div>'+
         '</div>';
 
@@ -189,5 +179,40 @@ function disp_layout_prn(f_pvc,sugod,hunong,arySELECTED){
       '</div>';
   }
   dtl+='</div>';  
-  document.getElementById(div_mainname).innerHTML=dtl;    
+  document.getElementById(div_mainname).innerHTML=dtl;
+  if(idType==1 && f_pvc){ aryPRN=swapper(o_sugod,o_hunong); }
+}
+
+function swapper(s,v){  
+  if(v<=1){ return; }  
+  var aryTMP=[];  
+  var ctr_TMP=s-1;
+  for(var i=0;i<v;i++){
+    aryTMP[i]=arySELECTED[ctr_TMP];
+    ctr_TMP++;
+  }
+
+  var max_h=glob_idheight;
+  var clientcode=document.getElementById('div_main_view_pvc').getAttribute('data-clientcode');
+  var v1=1;
+  var v2=aryTMP.length;
+  var vvv=parseInt(v2/2);
+      
+  var aryPVC2=DB_PVC2;
+  aryPVC2.sort(sortByMultipleKey(['clientcode','FLDNAME']));  
+  for(var i=1;i<=vvv;i++){
+    for(var ii=0;ii<aryPVC2.length;ii++){
+      if(aryPVC2[ii]['clientcode'] != clientcode){ continue; }
+
+      var fldname=aryPVC2[ii]['FLDNAME'];
+      if(!fldname){ continue; }
+      
+      if(parseInt(aryPVC2[ii]['vtop']) > max_h){ continue; }
+      
+      var sv_fld=aryTMP[v1-1][fldname]; //save column 1            
+      aryTMP[v1-1][fldname]=aryTMP[v2-1][fldname]; //assign column 1 with column 5
+      aryTMP[v2-1][fldname]=sv_fld; // assign column 5 with saved column1      
+    } 
+    v1++; v2--; 
+  }    
 }

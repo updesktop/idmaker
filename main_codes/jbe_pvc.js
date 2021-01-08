@@ -107,7 +107,7 @@ function view_pvc(clientcode){
   }
  
   var dtl=
-    '<div id="div_main_view_pvc" data-clientcode="'+clientcode+'" data-clientname="'+clientname+'" data-rkey="'+rkey+'" data-idtype="'+idtype+'" data-entrymode=0 style="width:100%;height:100%;background:coral;">'+
+    '<div id="div_main_view_pvc" data-clientcode="'+clientcode+'" data-clientname="'+clientname+'" data-rkey="'+rkey+'" data-idtype="'+idtype+'" data-entrymode=0 style="width:100%;height:100%;background:gray;">'+
     '</div>';
   openView(dtl,'PVC View','close_div_view_pvc'); 
   disp_view_ele(clientcode);  
@@ -210,8 +210,7 @@ function disp_view_ele(clientcode){
     }else if(vTag == 'img'){
       if(vFLDNAME){   
         dtl3='';
-        //vValue='';        
-        dtl_gfx=''; //'background:url('+JBE_API+'upload/layout/'+clientname+'/img/'+vValue+'?'+n+');background-repeat:no-repeat;background-size:auto 100%;';          
+        dtl_gfx=''; 
       }else{        
         vTitle=ctr_item+' = '+vTag;
         dtl3='';        
@@ -230,73 +229,77 @@ function disp_view_ele(clientcode){
   // ================= END
     
   dtl+=dtl2+'</div>'+
-    '<div id="div_right_view_pvc" data-num=0 class="cl_pvc_right" style="float:left;width:'+div_right_edit+'px;height:100%;font-size:12px;padding:5px;background:none;">'+
+    '<div id="div_right_view_pvc" data-num=0 class="cl_pvc_right" style="float:left;width:'+div_right_edit+'px;height:100%;font-size:12px;padding:2px;background:black;">'+
     
-      '<div id="div_names" data-rec="" style="display:block;width:100%;height:100%;overflow:auto;padding:5px;background:green;">'+        
+      '<div style="width:100%;height:30px;padding:2px;color:white;background:none;">'+           
+        '<input id="chkSel" type="checkbox" onchange="do_select(0,this.checked)" style="float:right;width:30px;height:100%;text-align:left;margin:0px;background:none;"/>'+
+        '<div style="float:right;height:100%;width:auto;padding:5px;font-size:15px;background:none;">Select All</div>'+        
+      '</div>'+
+
+      '<div id="div_names" data-rec="" style="display:block;width:100%;height:'+(H_VIEW-35)+'px;overflow:auto;padding:0px;background:none;">'+        
       '</div>'+
       
     '</div>'+
   '</div>';
   document.getElementById('div_main_view_pvc').innerHTML=dtl;
 
-  // =================display entries of the right corner
-  var aryPVCCLIENT=DB_PVCCLIENT;
-  var rkey=document.getElementById('div_main_view_pvc').getAttribute('data-rkey');
-  aryPVCCLIENT.sort(sortByMultipleKey(['clientcode',rkey]));  
-  //var clientname=JBE_GETFLD('clientname',DB_PVC1,'clientcode',clientcode);   
-  var clientname=document.getElementById('div_main_view_pvc').getAttribute('data-clientname');
-  
-  
-  //rkey=JBE_GETFLD('rkey',DB_PVC1,'clientcode',clientcode);   
-  var bg='white';
-  var edtl='<div id="div_pvcclient" data-num=0 style="width:100%;height:100%;padding:0px;background-color:white;">';
-  
-  for(var i=0;i<aryPVCCLIENT.length;i++){    
-    //var clientcode=aryPVCCLIENT[i]['clientcode'];
-    if(aryPVCCLIENT[i]['clientcode'] != clientcode){ continue; }
-    var num=aryPVCCLIENT[i]['NUM'];
-    
-    edtl+=
-      '<div id="divdtl'+num+'" onclick="disp_dtl_rec('+num+')" class="cl_ngalan" style="width:100%;min-height:20px;overflow:auto;cursor:pointer;padding:5px;background:'+bg+'">'+aryPVCCLIENT[i][rkey]+'</div>';
-    if(bg=='white'){ 
-      bg="lightgray";
-    }else{
-      bg="white";
-    }
-  }
-  
+  disp_names(clientcode);
+}
 
-  edtl+='</div>';
-  document.getElementById('div_names').innerHTML=edtl;
+function do_select(num,f_all){
+  var clientcode=document.getElementById('div_main_view_pvc').getAttribute('data-clientcode');
+  var fld_num=document.getElementById('div_pvcclient').getAttribute('data-num');
+  var div=document.getElementById('divdtl'+num);  
+  var vsel=0;
+  var vmode=1; //select one only
+  if(num==0){ //select ALL
+    vmode=0; 
+    if(f_all){
+      vsel=1;
+    }else{
+      vsel=0;
+    }
+  }else{
+    if(div.style.backgroundColor=='white'){    
+      vsel=1;
+    }else{        
+      vsel=0;
+    }
+  } 
+
+  //showProgress(true);    
+  axios.post(JBE_API+'z_entry.php', { request: 5,  
+    vmode:vmode,   
+    clientcode:clientcode,   
+    fld_num:fld_num,
+    sel:vsel
+  },JBE_HEADER)
+  .then(function (response) { 
+    showProgress(false);
+    console.log(response.data);
+    //alert(response.data);
+    DB_PVCCLIENT=response.data;
+    disp_names(clientcode);
+  },JBE_HEADER)    
+  .catch(function (error) { console.log(error); showProgress(false); }); 
 }
 
 function disp_names(clientcode){
   // =================display entries of the right corner
   var aryPVCCLIENT=DB_PVCCLIENT;
   var rkey=document.getElementById('div_main_view_pvc').getAttribute('data-rkey');
-  aryPVCCLIENT.sort(sortByMultipleKey(['clientcode',rkey]));  
-  //var clientname=JBE_GETFLD('clientname',DB_PVC1,'clientcode',clientcode);   
-  var clientname=document.getElementById('div_main_view_pvc').getAttribute('data-clientname');
-  
-  
-  //rkey=JBE_GETFLD('rkey',DB_PVC1,'clientcode',clientcode);   
-  var bg='white';
+  aryPVCCLIENT.sort(sortByMultipleKey(['clientcode',rkey]));    
+  var clientname=document.getElementById('div_main_view_pvc').getAttribute('data-clientname');  
   var edtl='<div id="div_pvcclient" data-num=0 style="width:100%;height:100%;padding:0px;background-color:white;">';
   
   for(var i=0;i<aryPVCCLIENT.length;i++){    
-    //var clientcode=aryPVCCLIENT[i]['clientcode'];
     if(aryPVCCLIENT[i]['clientcode'] != clientcode){ continue; }
     var num=aryPVCCLIENT[i]['NUM'];
-    
+    var bg='white';
+    if(aryPVCCLIENT[i]['sel'] == 1){ bg='lightblue'; }
     edtl+=
-      '<div id="divdtl'+num+'" onclick="disp_dtl_rec('+num+')" class="cl_ngalan" style="width:100%;min-height:20px;overflow:auto;cursor:pointer;padding:5px;background:'+bg+'">'+aryPVCCLIENT[i][rkey]+'</div>';
-    if(bg=='white'){ 
-      bg="lightgray";
-    }else{
-      bg="white";
-    }
+      '<div id="divdtl'+num+'" onclick="disp_dtl_rec('+num+')" ondblclick="do_select('+num+',false)" class="cl_ngalan" style="width:100%;min-height:20px;overflow:auto;cursor:pointer;padding:5px;border:1px solid gray;background:'+bg+'">'+aryPVCCLIENT[i][rkey]+'</div>';    
   }
-  
 
   edtl+='</div>';
   document.getElementById('div_names').innerHTML=edtl;
