@@ -63,7 +63,7 @@ function fm_entry(m){
                 '<div id="ee_div'+ctr_item+'" class="cl_entry_img" style="float:left;width:30%;height:100%;">'+retFLDNAME(clientcode,fldname)+'</div>'+
                 '<div style="float:left;width:70%;height:100%;">'+
                   '<input type="file" id="id_file_image'+ctr_item+'" data-orig="" data-sel=0 name="id_file_image" hidden="hidden" />'+
-                  '<img id="ee_inp'+ctr_item+'" data-fld="'+fldname+'" data-img="'+v_value+'" data-eetag="'+data_tag+'" data-tagname="'+data_tagname+'" src="'+JBE_API+'upload/layout/'+clientname+'/img/'+v_value+'" style="float:left;height:100%;background:red;"/>'+                  
+                  '<img id="ee_inp'+ctr_item+'" data-fld="'+fldname+'" data-img="'+v_value+'" data-eetag="'+data_tag+'" data-tagname="'+data_tagname+'" class="asyncImage" src="'+JBE_API+'upload/layout/'+clientname+'/img/'+v_value+'" style="float:left;height:100%;background:red;"/>'+                  
                   '<div id="ee_span'+ctr_item+'" style="float:left;margin-left:2%;width:auto;max-width:50%;height:100%;overflow:auto;background:green;">'+v_value+'</div>'+                  
                   '<button onclick="JBE_GET_IMAGE('+ctr_item+',id_file_image'+ctr_item+'.id,ee_inp'+ctr_item+'.id,&quot;&quot;,false)" style="float:right;width:40px;height:100%;">...</button>'+                  
                 '</div>';

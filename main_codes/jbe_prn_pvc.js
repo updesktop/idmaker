@@ -119,12 +119,12 @@ function disp_layout_prn(f_pvc,sugod,hunong,arySELECTED){
         
         dtl+=
         '<div style="width:'+idWidth+'px;height:'+idHeight+'px;'+v_idtype_css+'border:1px solid black;background:none;">'+
-          '<div id="front_prn_img" style="width:100%;height:100%;background:url('+JBE_API+'upload/layout/'+clientname+'/'+frontImg+'?'+n+') no-repeat;background-size: 100% 100%;"></div>'+
+          '<div id="front_prn_img" class="asyncImage" style="width:100%;height:100%;background:url('+JBE_API+'upload/layout/'+clientname+'/'+frontImg+'?'+n+') no-repeat;background-size: 100% 100%;"></div>'+
         '</div>';
 
         dtl+=
         '<div style="width:'+idWidth+'px;height:'+idHeight+'px;'+v_idtype_css+'border:0px solid green;background:none;">'+
-          '<div id="back_prn_img" style="width:100%;height:100%;background:url('+JBE_API+'upload/layout/'+clientname+'/'+backImg+'?'+n+') no-repeat;background-size: 100% 100%;"></div>'+
+          '<div id="back_prn_img" class="asyncImage" style="width:100%;height:100%;background:url('+JBE_API+'upload/layout/'+clientname+'/'+backImg+'?'+n+') no-repeat;background-size: 100% 100%;"></div>'+
         '</div>';
 
         if(idType == 1){
