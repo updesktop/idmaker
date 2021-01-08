@@ -166,7 +166,7 @@ function disp_layout_prn(f_pvc,sugod,hunong,arySELECTED){
           }
                      
           dtl2+=
-            '<div id="C'+i+aryPVC2[ii]['FLDNAME']+'" class="xcl_viewItems" data-fldname="'+aryPVC2[ii]['FLDNAME']+'" data-tag="'+aryPVC2[ii]['tag']+'" data-tagname="'+aryPVC2[ii]['tagname']+'"'+
+            '<div id="C'+i+aryPVC2[ii]['FLDNAME']+'" class="asyncImage" data-fldname="'+aryPVC2[ii]['FLDNAME']+'" data-tag="'+aryPVC2[ii]['tag']+'" data-tagname="'+aryPVC2[ii]['tagname']+'"'+
                 ' style="position:absolute;top:'+(parseInt(aryPVC2[ii]['vtop'])+wtop)+'px;left:'+(parseInt(aryPVC2[ii]['vleft'])+wleft)+'px;width:'+aryPVC2[ii]['vwidth']+'px;height:'+aryPVC2[ii]['vheight']+'px;'+
                 'font-family:'+aryPVC2[ii]['fontname']+';font-size:'+aryPVC2[ii]['fontsize']+'px;color:'+aryPVC2[ii]['fontcolor']+';font-weight:'+aryPVC2[ii]['fontbold']+';font-style:'+aryPVC2[ii]['fontitalic']+';text-align:'+aryPVC2[ii]['fontalign']+';'+              
                 dtl_gfx+'">'+

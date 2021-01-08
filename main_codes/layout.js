@@ -170,7 +170,7 @@ function fm_layout(m){ // =========== EDIT PVC LAYOUT =======
     vTop=10;vLeft=10;vHeight=30;vWidth=100;
         
     dtl2+=
-      '<div id="item'+i+'" data-fldname="" data-img="" data-top='+vTop+' data-left='+vLeft+' class="cl_item" onclick="sel_item('+i+')" data-tag="" data-obj="" title="add'+ctr_item+'"'+
+      '<div id="item'+i+'" data-fldname="" data-img="" data-top='+vTop+' data-left='+vLeft+' class="asyncImage cl_item" onclick="sel_item('+i+')" data-tag="" data-obj="" title="add'+ctr_item+'"'+
           ' style="display:none;top:'+(margin_top+vTop)+'px;left:'+(margin_left+vLeft)+'px;width:'+vWidth+'px;height:'+vHeight+'px;border:1px solid gold;">'+
       '</div>';    
   }
