@@ -117,6 +117,7 @@ function fm_layout(m){ // =========== EDIT PVC LAYOUT =======
     vTagname=aryPVC2[i]['tagname'];
     vTitle=aryPVC2[i]['vvalue'];
     vTitle=aryPVC2[i]['fontname'];
+    vUniq=parseInt(aryPVC2[i]['UNIQ']);
     
     vFontname=aryPVC2[i]['fontname'];             if(!vFontname){ vFontname=aryFONTS[0]; }
     //alert(vFontname);
@@ -149,7 +150,7 @@ function fm_layout(m){ // =========== EDIT PVC LAYOUT =======
     }  
     
     dtl2+=
-      '<div id="item'+ctr_item+'" data-fldname="'+vFLDNAME+'" data-img="'+vValue+'" data-tagname="'+vTagname+'" data-top='+vTop+' data-left='+vLeft+' class="cl_item" onclick="sel_item('+ctr_item+')" data-tag="'+vTag+'" title="item:'+ctr_item+'"'+      
+      '<div id="item'+ctr_item+'" data-uniq='+vUniq+' data-fldname="'+vFLDNAME+'" data-img="'+vValue+'" data-tagname="'+vTagname+'" data-top='+vTop+' data-left='+vLeft+' class="cl_item" onclick="sel_item('+ctr_item+')" data-tag="'+vTag+'" title="item:'+ctr_item+'"'+      
           ' style="display:block;top:'+(margin_top+vTop)+'px;left:'+(margin_left+vLeft)+'px;width:'+vWidth+'px;height:'+vHeight+'px;'+
           'font-family:'+vFontname+';font-size:'+vFontsize+'px;color:'+vFontcolor+';font-weight:'+vFontbold+';font-style:'+vFontitalic+';text-align:'+vFontalign+';'+
         dtl_gfx+'">'+
@@ -170,7 +171,7 @@ function fm_layout(m){ // =========== EDIT PVC LAYOUT =======
     vTop=10;vLeft=10;vHeight=30;vWidth=100;
         
     dtl2+=
-      '<div id="item'+i+'" data-fldname="" data-img="" data-top='+vTop+' data-left='+vLeft+' class="asyncImage cl_item" onclick="sel_item('+i+')" data-tag="" data-obj="" title="add'+ctr_item+'"'+
+      '<div id="item'+i+'" data-fldname="" data-uniq=0 data-img="" data-top='+vTop+' data-left='+vLeft+' class="asyncImage cl_item" onclick="sel_item('+i+')" data-tag="" data-obj="" title="add'+ctr_item+'"'+
           ' style="display:none;top:'+(margin_top+vTop)+'px;left:'+(margin_left+vLeft)+'px;width:'+vWidth+'px;height:'+vHeight+'px;border:1px solid gold;">'+
       '</div>';    
   }
@@ -202,7 +203,7 @@ function fm_layout(m){ // =========== EDIT PVC LAYOUT =======
         '</div>'+
         
         '<div style="width:100%;height:20px;padding:2px;background:none;">'+
-          '<div style="float:left;height:100%;width:40px;padding:0px;">FLD:</div>'+
+          '<button id="btnUNIQ" onclick="btnUNIQ(el_fld.value)" data-fld="" style="float:left;height:100%;width:38px;margin-right:2px;font-size:11px;border:1px solid black;padding:0px;cursor:pointer;">FLD:</button>'+
           '<select id="el_fld" name="el_fld" value="" onchange="make_fld(this.value)" style="float:left;width:'+w_inp+'px;height:100%;font-size:11px;padding:0px;">';
             var dtlfld='<option value=""> NONE </option>';            
             for(var i=1;i <= 15;i++){
@@ -312,6 +313,24 @@ function fm_layout(m){ // =========== EDIT PVC LAYOUT =======
   container.addEventListener("mousedown", dragStart, false);
   container.addEventListener("mouseup", dragEnd, false);
   container.addEventListener("mousemove", drag, false);  
+}
+
+function btnUNIQ(v){  
+  var sv_fld=v;
+  if(!sv_fld){ alert('wala'); return; }
+
+  var clientcode=document.getElementById('div_main_layout').getAttribute('data-clientcode');
+  //var uniq=JBE_GETFLD('UNIQ',DB_PVC2,'clientcode',clientcode);
+  var uniq=JBE_GET_FLD('clientname',DB_PVC2,{c1:'clientcode',c2:'FLDNAME'},{v1:'xxxx',v2:'v'});
+  alert('uniq='+uniq);
+  //document.getElementById('btnUNIQ').style.backgroundColor='red';
+  var fld=document.getElementById('btnUNIQ').getAttribute('data-fld');
+  var bg='white';
+  if(uniq==0){ 
+    bg='red'; 
+  }
+  document.getElementById('btnUNIQ').style.backgroundColor=bg;
+  alert(v+' = '+bg);
 }
 
 function chg_fontname(v){

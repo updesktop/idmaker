@@ -27,6 +27,7 @@ function sel_item(v){
 
 function disp_el_obj(){
   var ele=dragItem.getAttribute('data-tag');
+  var uniq=dragItem.getAttribute('data-uniq');
   
   document.getElementById('el_type').disabled=false;
   document.getElementById('el_fld').disabled=false;
@@ -37,6 +38,12 @@ function disp_el_obj(){
   
   //alert(elefld);
   document.getElementById('el_type').value=ele;
+  document.getElementById('btnUNIQ').disabled=false;
+
+  var clor_uniq='white';
+  if(uniq==1){ clor_uniq='red'; }
+  document.getElementById('btnUNIQ').style.backgroundColor=clor_uniq; 
+
   document.getElementById('el_fld').value=dragItem.getAttribute('data-fldname');
   document.getElementById('el_tagname').value=dragItem.getAttribute('data-tagname');
   document.getElementById('el_tagname').disabled=false;
@@ -176,6 +183,8 @@ function clear_sel_items(){
   document.getElementById('el_type').disabled=true;
   document.getElementById('btn_editImg').disabled=true;
   document.getElementById('btn_editImg').style.backgroundColor='gray';
+
+  document.getElementById('btnUNIQ').disabled=true;
   document.getElementById('el_fld').value='';
   document.getElementById('el_fld').disabled=true;
   document.getElementById('el_tagname').value='';

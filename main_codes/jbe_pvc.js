@@ -236,7 +236,7 @@ function disp_view_ele(clientcode){
         '<div style="float:right;height:100%;width:auto;padding:5px;font-size:15px;background:none;">Select All</div>'+        
       '</div>'+
 
-      '<div id="div_names" data-rec="" style="display:block;width:100%;height:'+(H_VIEW-35)+'px;overflow:auto;padding:0px;background:none;">'+        
+      '<div id="div_names" data-right_width='+div_right_edit+' data-rec="" style="display:block;width:100%;height:'+(H_VIEW-35)+'px;overflow:auto;padding:0px;background:none;">'+        
       '</div>'+
       
     '</div>'+
@@ -288,6 +288,7 @@ function disp_names(clientcode){
   // =================display entries of the right corner
   var aryPVCCLIENT=DB_PVCCLIENT;
   var rkey=document.getElementById('div_main_view_pvc').getAttribute('data-rkey');
+  var rightWidth=document.getElementById('div_names').getAttribute('data-right_width');
   aryPVCCLIENT.sort(sortByMultipleKey(['clientcode',rkey]));    
   var clientname=document.getElementById('div_main_view_pvc').getAttribute('data-clientname');  
   var edtl='<div id="div_pvcclient" data-num=0 style="width:100%;height:100%;padding:0px;background-color:white;">';
@@ -295,10 +296,16 @@ function disp_names(clientcode){
   for(var i=0;i<aryPVCCLIENT.length;i++){    
     if(aryPVCCLIENT[i]['clientcode'] != clientcode){ continue; }
     var num=aryPVCCLIENT[i]['NUM'];
+    var chk=aryPVCCLIENT[i]['sel'];
+    var chker='';
+    if(chk==1){ chker='checked'; }
     var bg='white';
     if(aryPVCCLIENT[i]['sel'] == 1){ bg='lightblue'; }
     edtl+=
-      '<div id="divdtl'+num+'" onclick="disp_dtl_rec('+num+')" ondblclick="do_select('+num+',false)" class="cl_ngalan" style="width:100%;min-height:20px;overflow:auto;cursor:pointer;padding:5px;border:1px solid gray;background:'+bg+'">'+aryPVCCLIENT[i][rkey]+'</div>';    
+      '<div id="divdtl'+num+'" class="cl_ngalan" onclick="disp_dtl_rec('+num+')" style="width:100%;height:30px;cursor:pointer;padding:2px;border:1px solid gray;background:'+bg+'">'+
+        '<input id="chkEntry" type="checkbox" '+chker+' onchange="do_select('+num+',false)" style="float:left;width:20px;height:100%;text-align:left;margin:0px;background:none;"/>'+
+        '<div style="float:left;width:'+(rightWidth-32)+'px;height:100%;margin-left:2px;overflow:auto;cursor:pointer;padding:5px;">'+aryPVCCLIENT[i][rkey]+'</div>'+
+      '</div>';
   }
 
   edtl+='</div>';
