@@ -1,12 +1,12 @@
 {
-  "name": "E-Store",
-  "short_name": "E-Store",
+  "name": "Regent Prints Digital",
+  "short_name": "Regent Prints",
   "start_url": ".",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#a9a9a9",
   "theme_color": "#a9a9a9",
-  "description": "Our Online Store",
+  "description": "Your Online Printing Store",
   "icons": [
     {
       "src": "gfx/icon-512x512.png",
