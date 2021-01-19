@@ -277,28 +277,48 @@ function JBE_GETFLD(r_ret_str,r_arry,r_fld,r_key){
 function JBE_GET_FLD(r_ret_str,r_arry,flds,vals){
   //alert(flds['c1']+' = '+vals['v1']);
   var flds_ctr=Object.keys(flds).length;
-  var xcond='';
+  var xcond=''; var ycond='';
   //alert(flds_ctr);
-  for(var j=1;j<=flds_ctr;j++){        
-    //xcond+=flds['c'+j]+' == '+vals['v'+j]+'&&';    
-    xcond+=flds['c'+j]+' == '+vals['v'+j]+'&&';    
+  for(var i=0;i<flds_ctr;i++){        
+    //xcond+=flds['c'+i]+' == '+vals['v'+i]+'&&';    
+    xcond+=flds['c'+(i+1)]+' == '+vals['v'+(i+1)]+' && ';    
+    //ycond+='r_arry[i]['+flds["c"+(i+1)]+'] == '+vals['v'+(i+1)]+' && ';   
+    var fld=flds["c"+(i+1)];
+    var val=vals["v"+(i+1)];
+    //alert('fld:'+fld+'\nVal:'+val);
+    //ycond+=r_arry[i][flds["c"+(i+1)]] == vals["v"+(i+1)]+' && ';    
+    ycond+=r_arry[i][fld] == vals[val]+' && ';    
+    //alert(i+' '+ycond);
   }
   
-  xcond=xcond.substring(0,xcond.length-2);
-  alert('cond: '+xcond);
+  //xcond=xcond.substring(0,xcond.length-4);
+  ycond=ycond.substring(0,ycond.length-4);
+  //alert('cond: '+xcond);
+  alert('ycond: '+ycond);
+  
   
   var rval='';
+  var zcond='';
+  //zcond=r_arry[i]["clientcode"]+' == "A_20201224_084053"';
   for(var i=0; i<r_arry.length; i++) {
     //if(r_key==r_arry[i][r_fld]){
-    if(xcond){
-      
+    //if(ycond){
+    //zcond='r_arry['+i+']["clientcode"] == "zA_20201224_084053"';
+    //zcond=r_arry[i]["clientcode"] == "A_20201224_084053";
+    zcond=ycond;
+    alert('zcond '+zcond);
+    if(zcond){
+      alert(r_ret_str);
       rval=r_arry[i][r_ret_str];  
       alert(i+' yes '+rval);    
       break;
+    }else{
+      alert(i+' none\n'+r_arry[i]["clientcode"]);
     }    
   }    
   return rval;
 }
+
 
 function JBE_GETARRY(r_arry,r_fld,r_key){   
   //JBE_GETFLD('usertype',DB_CLIENTS,'usercode',usercode);  

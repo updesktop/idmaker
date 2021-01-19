@@ -69,7 +69,7 @@ function fm_layout(m){ // =========== EDIT PVC LAYOUT =======
       '<div id="lay_back" style="margin-left:10px;width:'+v_idwidth+'px;height:'+v_idheight+'px;border:1px solid red;background:none;">'+
         '<div id="div_layout_backImg"  onclick="clear_sel_items()" data-img="'+nopath(backImg)+'"  style="width:100%;height:100%;background:url('+backImg+') no-repeat;background-size: 100% 100%;"></div>'+        
       '</div>'+
-      '<div style="height:10px;background:none;"></div>';
+      '<div onclick="expi({c1:&quot;aaa&quot;,c2:&quot;bbb&quot;})" style="height:10px;background:none;">xxxxx</div>';
   
   var aryPVC2=DB_PVC2;
   aryPVC2.sort(sortByMultipleKey(['clientcode','ndx']));  
@@ -321,7 +321,13 @@ function btnUNIQ(v){
 
   var clientcode=document.getElementById('div_main_layout').getAttribute('data-clientcode');
   //var uniq=JBE_GETFLD('UNIQ',DB_PVC2,'clientcode',clientcode);
-  var uniq=JBE_GET_FLD('clientname',DB_PVC2,{c1:'clientcode',c2:'FLDNAME'},{v1:'xxxx',v2:'v'});
+  var uniq=''; //JBE_GET_FLD('clientname',DB_PVC2,{c1:'clientcode',c2:'FLDNAME'},{v1:'xx',v2:v});
+  //var aryDB=JBE_GETFLD('UNIQ',DB_PVC2,'clientcode',clientcode);
+  for(var i=0;i<DB_PVC2.length;i++){
+    if(DB_PVC2[i]['clientcode']==clientcode && DB_PVC2[i]['FLDNAME']==v){
+      uniq=DB_PVC2[i]['UNIQ'];
+    }
+  }
   alert('uniq='+uniq);
   //document.getElementById('btnUNIQ').style.backgroundColor='red';
   var fld=document.getElementById('btnUNIQ').getAttribute('data-fld');
@@ -642,4 +648,11 @@ function chk_clientname(v){
     }
   }
   document.getElementById('div_main_layout').setAttribute('data-clientname',v);
+}
+
+function expi(flds){
+  var oobj=Object.keys(flds);
+  var key=oobj[0];
+  var val=flds[key];
+  alert(key+' = '+val);
 }
