@@ -1,4 +1,4 @@
-const cacheName = 'jstore_00732';
+const cacheName = 'rpd_00732';
 const staticAssets = [
   './',
   './index.html',
