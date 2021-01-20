@@ -12,15 +12,15 @@ const staticAssets = [
   'main_jslib/axios.min.js',
   'main_jslib/coke.js',   
   'main_jslib/je_msg.js',
-  
-  
-  'main_codes/jbe_admin.js',  'main_codes/jbe_cart.js',   
-  'main_codes/jbe_cat.js',    'main_codes/jbe_chat.js',
+    
+  'main_codes/jbe_admin.js',  'main_codes/jbe_chat.js',
   'main_codes/jbe_db.js',     'main_codes/jbe_map.js',  
-  'main_codes/jbe_notif.js',  'main_codes/jbe_order.js',  
-  'main_codes/jbe_pages.js',  'main_codes/jbe_stock.js',  
+  'main_codes/jbe_notif.js',  'main_codes/jbe_prn_pvc.js',
+  'main_codes/jbe_prn.js',    'main_codes/jbe_pvc.js',
+  
   'main_codes/jbe_sys.js',    'main_codes/jlib_lib.js',     
-  'main_codes/main_app.js',   'main_codes/jlib_main.js', 
+  'main_codes/jlib_main.js',  'main_codes/layout.js',
+  'main_codes/main_app.js',   'main_codes/main_drag.js',
 
   'main_codes/main_styles.css',   'main_codes/mobile.css',
   
